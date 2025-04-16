@@ -15,7 +15,6 @@ class DispatchValvePoint:
         self.max_time = max_time
         self.n_ug = len(parameters)
         
-        # x0 "padrão"
         self.initial_guess = np.array([self.parameters[i, 5] for i in range(self.n_ug)])
         
     def objective_rule(self, m):
@@ -40,7 +39,6 @@ class DispatchValvePoint:
 
         model.power_balance = Constraint(rule=self.power_balance_rule)
 
-        # Limites Pmin / Pmax
         for i in range(self.n_ug):
             model.pg[i].setlb(self.parameters[i, 5])
             model.pg[i].setub(self.parameters[i, 6])
@@ -61,9 +59,6 @@ class DispatchValvePoint:
         }
 
 
-# -----------------------------
-# Parâmetros e demanda
-# -----------------------------
 parameters = np.array([
     [21.3,   -0.3059,  0.001861,  0.0211, -3.1,  196.0, 250.0],
     [118.4,  -1.269,   0.004194,  0.1184, -13,   157.0, 230.0],
@@ -78,13 +73,10 @@ parameters = np.array([
 ])
 demand_profile = 2700
 
-# Criação do modelo
 dispatch_SCIP = DispatchValvePoint(parameters, demand_profile, "ipopt", 60)
 
-# Vamos definir o x0 como Pmin para cada usina
 x0 = [parameters[j, 5] for j in range(10)]
 
-# Otimizar uma única vez
 print(f"Iniciando resolução com x0 = {x0}")
 start_time = time.time()
 result = dispatch_SCIP.optimize(x0)

@@ -83,7 +83,7 @@ class DispatchValvePointRampLimits:
                 model.pg[i, t].setlb(self.parameters[i, 5])
                 model.pg[i, t].setub(self.parameters[i, 6])
 
-        solver = SolverFactory("ipopt", executable="C:/Users/joao/anaconda3/Library/bin/ipopt.exe")
+        solver = SolverFactory("ipopt", executable="C:/Users/Joao/anaconda3/Library/bin/ipopt.exe")
         solver.options["max_cpu_time"] = self.max_time
         solver.options["max_iter"] = self.max_iter
         solver.options["tol"] = 1e-6
@@ -100,7 +100,6 @@ class DispatchValvePointRampLimits:
             print(f"Tempo {t+1}: Geração Total = {total_generation[t]:.2f}, Demanda = {self.demand_profile[t]}, Perdas = {losses_values[t]:.2f}")
 
         return result
-
 
 demand_profile = np.array([
     1036, 1110, 1258, 1406, 1480, 1628, 1702, 1776, 1924, 2072,
@@ -146,6 +145,7 @@ B_matrix = np.array([
     [0.80, 0.54, 3.10, 0.67, -0.90, 3.00, 5.90, -0.96, 0.93, -0.30],
     [-0.10, 7.20, -2.00, 1.80, 0.69, -3.00, -0.60, 0.56, -0.30, 0.99],
 ]) * 1e-5 
+
 
 
 start_time = time.time()
