@@ -73,7 +73,6 @@ demand_profile = np.array([
         1924, 1628, 1332, 1184
     ])
     
-    #F(P) = a + bP + cP² + abs(e*sen(f*(Pmin-P))
 parameters = np.array([
         #c          #b          #a          #e      #f      #Pmin   #Pmax   #UR #DR
         [0.00043,   21.60,      958.29,     450,    0.041,   150,    470,    80, 80],   #UG1

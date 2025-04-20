@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 
 TOL = 1e-4
 W = 1
-LOSS = 1  # Definindo perda mínima
+LOSS = 1  
 
 class DispatchValvePointRampLimits:
     def __init__(self, parameters: np.array, emission_parameters: np.array, demand_profile: np.array, B_matrix: np.array, solver_framework: str, max_time: int, max_iter: int, metaheuristic_initial_guess: np.array):
@@ -101,7 +101,6 @@ class DispatchValvePointRampLimits:
             'iterations': result.solver.iterations if hasattr(result.solver, 'iterations') else None
         }
 
-# Dados de exemplo
 demand_profile = np.array([
     1036, 1110, 1258, 1406, 1480, 1628, 1702, 1776, 1924, 2072,
     2146, 2220, 2072, 1924, 1776, 1554, 1480, 1628, 1776, 2072,
@@ -193,7 +192,6 @@ for i in range(NUM_ITER):
     results.append(result)
 
 
-# **Análise Estatística**
 C_pyomo_ipopt_df_results = pd.DataFrame(results)
 pd.options.display.float_format = '{:.15f}'.format
 
@@ -226,7 +224,6 @@ print(f"Média de tempo: {time_mean_result}")
 print(f"Desvio padrão dos resultados: {cost_std_result}")
 print(f"Desvio padrão do tempo: {time_std_result}")
 
-# **Extração dos dados da melhor iteração**
 best_result = results[cost_best_result_idx]
 
 pg_matrix = best_result['solution']
@@ -237,22 +234,19 @@ df_pg.loc['Total'] = total_generation
 df_pg.loc['Demand'] = demand_profile
 df_pg.loc['Losses'] = best_result['losses']
 
-# **Ranking das UTEs por despacho total**
 ute_totals = df_pg.sum(axis=1).drop(['Total', 'Demand', 'Losses'])
 ute_ranking = ute_totals.sort_values(ascending=False)
 
 print("\n🏆 **Ranking das UTEs por Energia Despachada:**")
 print(ute_ranking)
 
-# **Exportação para CSV**
 df_pg.to_csv("melhor_iteracao_despacho.csv", index=True)
 
 print("\n📊 **Dados da melhor iteração salvos em 'melhor_iteracao_despacho_d.csv'**")
 
-# **Visualização com Boxplot**
 plt.figure(figsize=(8, 6))
 plt.boxplot(C_pyomo_ipopt_df_results['cost'])
-#plt.title('Distribuição do Custo Operacional - Pyomo-IPOPT')
+
 plt.ylabel('Custo ($)')
 plt.tight_layout()
 plt.show()

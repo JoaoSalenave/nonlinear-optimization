@@ -53,11 +53,8 @@ class DispatchValvePoint:
 
             return result
 
-    #Demanda
 demand_profile = 2700.0            
 
-    #Matriz Coeficientes de Custo
-    #F(P) = a + bP + cP² + abs(e*sen(f*(Pmin-P))
 parameters = np.array([
     #a          #b              #c              #e          #f      #Pmin   #Pmax
     [21.3,      -0.3059,        0.001861,       0.0211,     -3.1,   196.0,  250.0],   #UG1  
